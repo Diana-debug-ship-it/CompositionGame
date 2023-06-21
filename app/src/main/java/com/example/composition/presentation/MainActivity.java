@@ -1,8 +1,10 @@
-package com.example.composition;
+package com.example.composition.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.composition.R;
 
 public class MainActivity extends AppCompatActivity {
 
