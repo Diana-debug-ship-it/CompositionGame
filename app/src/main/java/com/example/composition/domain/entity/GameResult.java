@@ -1,9 +1,12 @@
 package com.example.composition.domain.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class GameResult implements Serializable {
+public class GameResult implements Parcelable {
     private boolean winner;
     private Integer countOfRightAnswers;
     private Integer countOfQuestions;
@@ -18,6 +21,56 @@ public class GameResult implements Serializable {
         this.countOfQuestions = countOfQuestions;
         this.gameSettings = gameSettings;
     }
+
+    protected GameResult(Parcel in) {
+        winner = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            countOfRightAnswers = null;
+        } else {
+            countOfRightAnswers = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            countOfQuestions = null;
+        } else {
+            countOfQuestions = in.readInt();
+        }
+        gameSettings = in.readParcelable(GameSettings.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (winner ? 1 : 0));
+        if (countOfRightAnswers == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(countOfRightAnswers);
+        }
+        if (countOfQuestions == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(countOfQuestions);
+        }
+        dest.writeParcelable(gameSettings, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<GameResult> CREATOR = new Creator<GameResult>() {
+        @Override
+        public GameResult createFromParcel(Parcel in) {
+            return new GameResult(in);
+        }
+
+        @Override
+        public GameResult[] newArray(int size) {
+            return new GameResult[size];
+        }
+    };
 
     @Override
     public boolean equals(Object o) {

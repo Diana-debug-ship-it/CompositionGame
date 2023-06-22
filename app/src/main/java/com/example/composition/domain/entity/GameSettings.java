@@ -1,9 +1,13 @@
 package com.example.composition.domain.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class GameSettings implements Serializable {
+
+public class GameSettings implements Parcelable {
      private Integer maxSumValue;
      private Integer minCountOfRightAnswers;
      private Integer minPercentOfRightAnswers;
@@ -18,6 +22,74 @@ public class GameSettings implements Serializable {
         this.minPercentOfRightAnswers = minPercentOfRightAnswers;
         this.gameTimeInSeconds = gameTimeInSeconds;
     }
+
+    protected GameSettings(Parcel in) {
+        if (in.readByte() == 0) {
+            maxSumValue = null;
+        } else {
+            maxSumValue = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            minCountOfRightAnswers = null;
+        } else {
+            minCountOfRightAnswers = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            minPercentOfRightAnswers = null;
+        } else {
+            minPercentOfRightAnswers = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            gameTimeInSeconds = null;
+        } else {
+            gameTimeInSeconds = in.readInt();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (maxSumValue == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(maxSumValue);
+        }
+        if (minCountOfRightAnswers == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(minCountOfRightAnswers);
+        }
+        if (minPercentOfRightAnswers == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(minPercentOfRightAnswers);
+        }
+        if (gameTimeInSeconds == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(gameTimeInSeconds);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<GameSettings> CREATOR = new Creator<GameSettings>() {
+        @Override
+        public GameSettings createFromParcel(Parcel in) {
+            return new GameSettings(in);
+        }
+
+        @Override
+        public GameSettings[] newArray(int size) {
+            return new GameSettings[size];
+        }
+    };
 
     public Integer getMaxSumValue() {
         return maxSumValue;

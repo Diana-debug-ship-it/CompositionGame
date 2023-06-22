@@ -20,9 +20,9 @@ import com.example.composition.domain.entity.GameSettings;
 
 public class GameFinishedFragment extends Fragment {
 
-    FragmentGameFinishedBinding binding;
-    private Integer result;
+    GameResult result;
 
+    FragmentGameFinishedBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,10 +34,17 @@ public class GameFinishedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        parseResults();
+        result = parseResults();
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                retryGame();
+            }
+        });
+
+        binding.buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 retryGame();
             }
         });
@@ -46,14 +53,16 @@ public class GameFinishedFragment extends Fragment {
     private void retryGame(){
         requireActivity().getSupportFragmentManager().popBackStack(GAME_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
-    private void parseResults(){
-        getArguments().getSerializable(KEY_GAME_RESULTS);
+    private GameResult parseResults(){
+        assert getArguments() != null;
+        GameResult result = getArguments().getParcelable(KEY_GAME_RESULTS);
+        return result;
     }
 
     public static GameFinishedFragment newInstance(){
         GameFinishedFragment fragment = new GameFinishedFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KEY_GAME_RESULTS, new GameResult(false, 0, 0, new GameSettings(0, 0, 0, 0)));
+        args.putParcelable(KEY_GAME_RESULTS, new GameResult(false, 0, 0, new GameSettings(0, 0, 0, 0)));
         fragment.setArguments(args);
         return fragment;
     }
