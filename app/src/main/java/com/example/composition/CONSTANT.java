@@ -9,4 +9,7 @@ public class CONSTANT {
     public static final String KEY_GAME_RESULTS = "Game results";
     public static final String CHOOSE_LEVEL_FRAGMENT = "Choose level fragment";
     public static final String GAME_FRAGMENT = "Game fragment";
+
+    public static final long MILLIS_IN_SECONDS = 1000;
+    public static final int SECONDS_IN_MINUTES = 60;
 }

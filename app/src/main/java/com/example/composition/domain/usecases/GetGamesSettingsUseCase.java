@@ -9,6 +9,10 @@ public class GetGamesSettingsUseCase {
 
     private GameRepository gameRepository;
 
+    public GetGamesSettingsUseCase(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
     public GameSettings getGameSettings(Level level) {
         return gameRepository.getGameSettings(level);
     }

@@ -68,7 +68,7 @@
         app:layout_constraintBottom_toTopOf="@id/tvOption5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textViewOperand"
-        tools:text="@string/question_mark" />
+        android:text="@string/question_mark" />
 
     <TextView
         android:id="@+id/tvOption1"
