@@ -1,5 +1,10 @@
 package com.example.composition.domain.entity;
 
-enum Level {
-    TEST, EASY, NORMAL, HARD
+import java.io.Serializable;
+
+public enum Level implements Serializable {
+    TEST,
+    EASY,
+    NORMAL,
+    HARD
 }

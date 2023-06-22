@@ -1,8 +1,9 @@
 package com.example.composition.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GameSettings {
+public class GameSettings implements Serializable {
      private Integer maxSumValue;
      private Integer minCountOfRightAnswers;
      private Integer minPercentOfRightAnswers;

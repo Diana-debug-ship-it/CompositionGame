@@ -1,8 +1,9 @@
 package com.example.composition.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GameResult {
+public class GameResult implements Serializable {
     private boolean winner;
     private Integer countOfRightAnswers;
     private Integer countOfQuestions;
